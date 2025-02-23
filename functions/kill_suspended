@@ -1,0 +1,7 @@
+#!/bin/zsh
+# kill_suspended, kills the selected process in fzf-ctrl-z plugin
+
+kill_suspended() {
+  local entry=$(printf "$1" | awk '{ print $1 }' | tr -d '[]')
+  kill -KILL %"$entry"
+}

@@ -1,0 +1,8 @@
+#!/bin/zsh
+# List the processes for the fzf-ctrl-z plugin
+
+get_jobs() {
+  local current_jobs=($(jobs -l))
+  [[ -n $current_jobs ]] || return
+  printf "%s\n" "${current_jobs[@]}"
+}
