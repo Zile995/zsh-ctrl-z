@@ -48,9 +48,6 @@ fzf-ctrl-z() {
 
 # Init
 () {
-  (( $fpath[(I)${ZSH_CTRL_Z_HOME}/functions] )) ||
-    fpath+=(${ZSH_CTRL_Z_HOME}/functions)
-
   'builtin' local keymap
   for keymap in 'emacs' 'viins' 'vicmd'; do
     bindkey -M "$keymap" '^Z' fzf-ctrl-z
