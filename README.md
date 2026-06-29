@@ -7,7 +7,7 @@ zsh-ctrl-z
 A lightweight zsh plugin that enhances the default `CTRL+Z` behavior using `fzf`. It allows you to visually browse, resume, or terminate suspended background jobs directly from your terminal prompt.
 
 <p align="center" width="100%">
-<video src=https://github.com/user-attachments/assets/d2c0d910-3f4e-4d27-8597-d19551579233 width="80%" controls></video>
+<video src=https://github.com/user-attachments/assets/4744c98d-a27e-4271-a820-2a807bde2e8f width="80%" controls></video>
 </p>
 </div>
 
