@@ -7,14 +7,16 @@ fzf-ctrl-z() {
   [[ -n "${current_jobs[1]}" ]] || return
 
   if [[ ${#current_jobs} -eq 1 ]]; then
-    BUFFER="fg" && zle accept-line -w
+    BUFFER=""
+    zle -I && fg >/dev/null 2>&1
+    zle reset-prompt
     return
   fi
 
   local selected
   while true; do
     local current_jobs=("${(@f)$(jobs -l)}")
-		[[ -n "${current_jobs[1]}" ]] || break
+    [[ -n "${current_jobs[1]}" ]] || break
 
     selected=$(printf "%s\n" "${current_jobs[@]}" | fzf \
       --reverse \
@@ -26,15 +28,15 @@ fzf-ctrl-z() {
     [[ -z $selected ]] && break
 
     if [[ "$selected" =~ "^kill:\[" ]]; then
-	  	local job_id=$(echo "$selected" | sed 's/kill://' | awk '{print $1}' | tr -d '[]')
-    	if [[ -n $job_id ]]; then
-    		kill -KILL %"$job_id" 2>/dev/null
-    		sleep 0.1
-  		fi
+      local job_id=$(echo "$selected" | sed 's/kill://' | awk '{print $1}' | tr -d '[]')
+      if [[ -n $job_id ]]; then
+        kill -KILL %"$job_id" 2>/dev/null
+    	sleep 0.1
+      fi
     else
       local job_id=$(echo "$selected" | awk '{print $1}' | tr -d '[]')
-      BUFFER="fg %$job_id"
-      zle accept-line -w
+      BUFFER=""
+      zle -I && fg %"$job_id" >/dev/null 2>&1
       break
     fi
   done
