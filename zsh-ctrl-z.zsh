@@ -6,7 +6,7 @@ fzf-ctrl-z() {
   (( ${#jobstates} == 0 )) && return
   (( ${#jobstates} == 1 )) && {
     BUFFER=""
-    zle -I && 'builtin' fg >/dev/null 2>&1
+    zle -I && 'builtin' fg
     zle reset-prompt
     return
   }
@@ -17,9 +17,9 @@ fzf-ctrl-z() {
     local -a current_jobs=("${(@f)$(jobs -l)}")
     local -a selected=("${(@f)$(printf "%s\n" "${current_jobs[@]}" | fzf \
       --reverse \
-      --expect=ctrl-k \
+      --expect=ctrl-k,ctrl-x \
       --bind "ctrl-z:accept" \
-      --header "ENTER / CTRL-Z: Foreground job | CTRL-K: Kill job" \
+      --header "ENTER / CTRL-Z: Foreground job | CTRL-K: Kill job | CTRL-X: Kill all" \
       --prompt="  Search jobs ❯ ")}")
 
     (( $#selected < 2 )) && break
@@ -29,13 +29,17 @@ fzf-ctrl-z() {
     [[ -z $job_id ]] && break
 
     case "${key:-accept}" in
-      ctrl-k)
-        'builtin' kill -KILL %"$job_id" 2>/dev/null
-        sleep 0.1
-        ;;
       accept)
         BUFFER=""
-        zle -I && 'builtin' fg %"$job_id" >/dev/null 2>&1
+        zle -I && 'builtin' fg %"$job_id"
+        break
+        ;;
+      ctrl-k)
+        'builtin' kill -KILL %"$job_id"
+        sleep 0.1
+        ;;
+      ctrl-x)
+        'builtin' kill -KILL ${${(v)jobstates##*:*:}%=*}
         break
         ;;
     esac
