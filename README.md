@@ -27,7 +27,7 @@ A lightweight zsh plugin that enhances the default `CTRL+Z` behavior using `fzf`
     echo 'source ${ZDOTDIR:-$HOME}/zsh-ctrl-z/zsh-ctrl-z.zsh' >>${ZDOTDIR:-$HOME}/.zshrc
     ```
   - ## Antidote
-    Add this line to `${ZDOTDIR:-$HOME}/.zsh_plugins` bundle file:
+    Add this line to `${ZDOTDIR:-$HOME}/.zsh_plugins.txt` bundle file:
     ```
     Zile995/zsh-ctrl-z
     ```
@@ -39,12 +39,14 @@ A lightweight zsh plugin that enhances the default `CTRL+Z` behavior using `fzf`
     github = "Zile995/zsh-ctrl-z"
     ```
 
-# Keybindings
+# Shortcuts
 
 When the `fzf` menu is open, you can use the following shortcuts:
 
-| Keybinding | Action |
-|------------|--------|
-| `Enter` / `CTRL+Z` | Bring the selected job to the foreground (`fg`) |
-| `CTRL+K` | Instantly terminate the selected job (`kill -KILL`) |
-| `ESC` / `CTRL+C` | Exit the menu and return to the prompt |
+| Shortcut | Action | Description |
+| :--- | :--- | :--- |
+| `ENTER` / `Double-Click` | **Foreground** | Brings the selected job to the foreground. |
+| `CTRL-Z` | **Foreground** | Brings the selected job to the foreground (consistent with Enter). |
+| `CTRL-K` | **Kill Single** | Sends `SIGKILL` to the selected background job. |
+| `CTRL-X` | **Kill ALL** | Sends `SIGKILL` to **all** active background jobs instantly. |
+| `ESC` | **Exit** | Closes the interface without shifting any jobs. |
